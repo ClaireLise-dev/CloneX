@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+    themes: lightX --default, nightX --prefersdark;
+}
+
+@plugin "daisyui/theme" {
+    name: "lightX";
+    default: true;
+    prefersdark: false;
+    color-scheme: light;
+
+    --color-base-100: #f6f4ff;
+    --color-base-200: #ffffff;
+    --color-base-300: #ede9fe;
+    --color-base-content: #1f1b2e;
+
+    --color-primary: #7c3aed;
+    --color-primary-content: #ffffff;
+
+    --color-secondary: #a78bfa;
+    --color-secondary-content: #1f1b2e;
+
+    --color-accent: #c084fc;
+    --color-accent-content: #1f1b2e;
+
+    --color-neutral: #2a223d;
+    --color-neutral-content: #ffffff;
+
+    --color-info: #60a5fa;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+
+    --radius-box: 1rem;
+    --radius-btn: 9999px;
+    --radius-badge: 9999px;
+    --border: 1px;
+}
+
+@plugin "daisyui/theme" {
+    name: "nightX";
+    default: false;
+    prefersdark: true;
+    color-scheme: dark;
+
+    --color-base-100: #0f0a19;
+    --color-base-200: #181126;
+    --color-base-300: #221a35;
+    --color-base-content: #f5f3ff;
+
+    --color-primary: #7c3aed;
+    --color-primary-content: #ffffff;
+
+    --color-secondary: #a78bfa;
+    --color-secondary-content: #140f22;
+
+    --color-accent: #c084fc;
+    --color-accent-content: #140f22;
+
+    --color-neutral: #140f22;
+    --color-neutral-content: #f5f3ff;
+
+    --color-info: #60a5fa;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+
+    --radius-box: 1rem;
+    --radius-btn: 9999px;
+    --radius-badge: 9999px;
+    --border: 1px;
+}
