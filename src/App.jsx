@@ -5,7 +5,6 @@ import { lazy, Suspense } from "react";
 const Home = lazy(() => import("./pages/Home"));
 const Main = lazy(() => import("./layouts/Main"));
 const Signup = lazy(() => import("./pages/Signup"));
-const Login = lazy(() => import("./pages/Login"));
 const Feed = lazy(() => import("./pages/Feed"));
 const Profile = lazy(() => import("./pages/Profile"));
 const TweetDetails = lazy(() => import("./pages/TweetDetails"));
@@ -42,14 +41,6 @@ export default function App() {
               element: (
                 <Suspense>
                   <Signup />
-                </Suspense>
-              ),
-            },
-            {
-              path: "login",
-              element: (
-                <Suspense>
-                  <Login />
                 </Suspense>
               ),
             },
