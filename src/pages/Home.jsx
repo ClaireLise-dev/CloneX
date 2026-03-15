@@ -1,6 +1,7 @@
 import Logo from "../components/Logo/Logo";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Home() {
   // Variables

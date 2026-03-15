@@ -1,18 +1,50 @@
 import Logo from "../components/Logo/Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { useState } from "react";
 
 export default function Home() {
+  // Variables
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
+
+  // States
+
+  const [loading, setLoading] = useState(false);
+
   // Fonction
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    if (loading) return;
+
+    setLoading(true);
+
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        setLoading(false);
+        navigate("/?success=true");
+        toast.success("Inscription réussie !");
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        if (code === "auth/email-already-in-use") {
+          toast.error("Cette adresse email est déjà utilisée.");
+        } else {
+          toast.error(message);
+        }
+        setLoading(false);
+      });
   };
+
   return (
     <main data-theme="lightX" className="min-h-screen bg-base-100">
       <div className="flex flex-row items-center justify-center gap-12 h-screen">
@@ -68,7 +100,12 @@ export default function Home() {
                 {errors.password && (
                   <p className="text-error mb-5">{errors.password.message}</p>
                 )}
-                <button className="btn btn-primary btn-lg">S'inscrire</button>
+                <button
+                  className="btn btn-primary btn-lg disabled:cursor-not-allowed disabled:opacity-90"
+                  disabled={isSubmitting}
+                >
+                  S'inscrire
+                </button>
               </form>
               <div className="text-sm text-center text-base-content mt-4">
                 Déjà un compte ?{" "}
