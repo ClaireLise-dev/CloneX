@@ -2,7 +2,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useContext } from "react";
+import { AuthContext } from "./store/AuthProvider";
 
 const Home = lazy(() => import("./pages/Home"));
 const Main = lazy(() => import("./layouts/Main"));
@@ -13,6 +14,8 @@ const TweetDetails = lazy(() => import("./pages/TweetDetails"));
 const Error = lazy(() => import("./pages/Error"));
 
 export default function App() {
+  const { user, loading } = useContext(AuthContext);
+
   return (
     <>
       <ToastContainer theme="dark" position="bottom-right" />
@@ -33,11 +36,7 @@ export default function App() {
             children: [
               {
                 path: "/",
-                element: (
-                  <Suspense>
-                    <Home />
-                  </Suspense>
-                ),
+                element: <Suspense>{user ? <Feed /> : <Home />}</Suspense>,
                 index: true,
               },
               {

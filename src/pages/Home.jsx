@@ -1,7 +1,9 @@
 import Logo from "../components/Logo/Logo";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { useState, useContext } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../store/AuthProvider";
 
 export default function Home() {
   // Variables
@@ -10,15 +12,35 @@ export default function Home() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { loginUser } = useContext(AuthContext);
+
+  // States
+  const [loading, setLoading] = useState(false);
 
   // Fonction
   const onSubmit = (data) => {
-    console.log(data);
+    if (loading) return;
+
+    loginUser(data.email, data.password)
+      .then((userCredential) => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        const { code, message } = error;
+        if (code == "auth/user-not-found") {
+          toast.error("Cet email n'existe pas.");
+        } else if (code == "auth/invalid-credential") {
+          toast.error("La combinaison est incorrecte.");
+        } else {
+          toast.error(code);
+        }
+      });
   };
 
   return (
     <main data-theme="lightX" className="min-h-screen bg-base-100">
-      <div className="flex flex-row items-center justify-center gap-12 h-screen">
+      <div className="flex flex-row items-center justify-center gap-1 p-2 h-screen">
         <div>
           <Logo />
           <h1 className="text-4xl font-bold text-base-content">
