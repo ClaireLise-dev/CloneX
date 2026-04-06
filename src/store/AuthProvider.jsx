@@ -1,6 +1,9 @@
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
+  EmailAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -14,13 +17,14 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
+
+    return unsubscribe;
   }, []);
 
-  // Functions
   const logOut = () => {
     return signOut(auth);
   };
@@ -33,12 +37,33 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const deleteCurrentUser = async (password) => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      throw new Error("Aucun utilisateur connecté.");
+    }
+
+    if (!currentUser.email) {
+      throw new Error("Aucun email associé à cet utilisateur.");
+    }
+
+    const credential = EmailAuthProvider.credential(
+      currentUser.email,
+      password,
+    );
+
+    await reauthenticateWithCredential(currentUser, credential);
+    await deleteUser(currentUser);
+  };
+
   const authValue = {
     user,
     loading,
     logOut,
     createUser,
     loginUser,
+    deleteCurrentUser,
   };
 
   return (
