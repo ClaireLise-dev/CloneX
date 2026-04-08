@@ -10,8 +10,9 @@ const Main = lazy(() => import("./layouts/Main"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Feed = lazy(() => import("./pages/Feed"));
 const Profile = lazy(() => import("./pages/Profile"));
-const TweetDetails = lazy(() => import("./pages/TweetDetails"));
+const CreateTweet = lazy(() => import("./pages/CreateTweet"));
 const Error = lazy(() => import("./pages/Error"));
+const TweetDetails = lazy(() => import("./pages/TweetDetails"));
 
 export default function App() {
   const { user, loading } = useContext(AuthContext);
@@ -60,6 +61,14 @@ export default function App() {
                 element: (
                   <Suspense>
                     <Profile />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "create-tweet",
+                element: (
+                  <Suspense>
+                    <CreateTweet />
                   </Suspense>
                 ),
               },
