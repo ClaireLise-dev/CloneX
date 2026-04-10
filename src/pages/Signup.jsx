@@ -26,11 +26,53 @@ export default function Home() {
 
     setLoading(true);
 
+    const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.pseudo}`;
+
+    const newUser = {
+      Pseudo: data.pseudo,
+      Email: data.email,
+      AvatarUrl: avatarUrl,
+    };
+
+    const response = await fetch(
+      `https://clonex-421e0-default-rtdb.europe-west1.firebasedatabase.app/users.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    const users = await response.json();
+    const usersArray = users ? Object.values(users) : [];
+
+    const pseudoExiste = usersArray.some((user) => user.Pseudo === data.pseudo);
+
+    if (pseudoExiste) {
+      toast.error("Ce pseudo est déjà utilisé.");
+      setLoading(false);
+      return;
+    }
+
     await createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        setLoading(false);
+        const response = await fetch(
+          `https://clonex-421e0-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}.json`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+          },
+        );
+        // Erro
+        if (!response.ok) {
+          throw new Error("Une erreur est intervenue");
+        }
         navigate("/?success=true");
         toast.success("Inscription réussie !");
       })
@@ -41,6 +83,8 @@ export default function Home() {
         } else {
           toast.error(message);
         }
+      })
+      .finally(() => {
         setLoading(false);
       });
   };
@@ -73,6 +117,27 @@ export default function Home() {
 
               {errors.email && (
                 <p className="text-error mb-5">{errors.email.message}</p>
+              )}
+
+              <input
+                type="text"
+                placeholder="Pseudo"
+                className="input w-full border-2 border-base-300 focus:border-2 focus:border-primary focus:outline-none focus:ring-0"
+                {...register("pseudo", {
+                  required: true,
+                  minLength: {
+                    value: 3,
+                    message: "Le pseudo doit contenir au moins 3 caractères.",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Le pseudo ne doit pas dépasser 20 caractères.",
+                  },
+                })}
+              />
+
+              {errors.pseudo && (
+                <p className="text-error mb-5">{errors.pseudo.message}</p>
               )}
 
               <input
