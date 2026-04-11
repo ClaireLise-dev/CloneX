@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { AuthContext } from "../store/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 export default function ConnectedLayout({ children }) {
   // Variables
   const { user, loading } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   if (loading) {
@@ -18,5 +20,10 @@ export default function ConnectedLayout({ children }) {
     return <div></div>;
   }
 
-  return <>{children}</>;
+  return (
+    <div className="flex h-screen">
+      <Sidebar />
+      <main className="flex-1 overflow-y-auto">{children}</main>
+    </div>
+  );
 }

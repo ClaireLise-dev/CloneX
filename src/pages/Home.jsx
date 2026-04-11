@@ -39,10 +39,10 @@ export default function Home() {
   };
 
   return (
-    <main data-theme="lightX" className="min-h-screen bg-base-100">
+    <main className="min-h-screen bg-base-300">
       <div className="flex flex-row items-center justify-center md:gap-4 lg:gap-10 p-2 h-screen">
         <div>
-          <Logo />
+          <Logo className="h-30 w-30 mb-10" />
           <h1 className="text-4xl font-bold text-base-content">
             Rejoins la conversation
           </h1>

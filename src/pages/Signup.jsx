@@ -73,7 +73,7 @@ export default function Home() {
         if (!response.ok) {
           throw new Error("Une erreur est intervenue");
         }
-        navigate("/?success=true");
+        navigate("/feed");
         toast.success("Inscription réussie !");
       })
       .catch((error) => {
@@ -90,9 +90,9 @@ export default function Home() {
   };
 
   return (
-    <main data-theme="lightX" className="min-h-screen bg-base-100">
+    <main className="min-h-screen bg-base-300">
       <div className="flex flex-col items-center justify-center gap-1 h-screen">
-        <Logo />
+        <Logo className="h-30 w-30 mb-10" />
         <div className="card bg-base-100 shadow-2xl w-150">
           <div className="card-body p-15">
             <div className="card-title text-3xl text-primary font-bold mb-4">
