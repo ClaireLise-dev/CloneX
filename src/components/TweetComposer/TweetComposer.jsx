@@ -2,9 +2,11 @@ import { AuthContext } from "../../store/AuthProvider";
 import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function TweetComposer() {
   // Variables
+  const queryClient = useQueryClient();
   const { user, userProfile } = useContext(AuthContext);
   const {
     register,
@@ -47,6 +49,7 @@ export default function TweetComposer() {
 
     toast.success("Tweet publié !");
     reset();
+    queryClient.invalidateQueries({ queryKey: ["tweets"] });
     setLoading(false);
   };
 

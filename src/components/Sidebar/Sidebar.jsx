@@ -36,7 +36,7 @@ export default function Sidebar() {
           </Link>
           <button
             onClick={() => logOut()}
-            className="flex flex-row gap-5 items-center hover:bg-base-300 rounded-lg w-full p-3"
+            className="flex flex-row gap-5 items-center hover:bg-base-300 rounded-lg w-full p-3 "
           >
             <LogOut className="h-6 w-6" color="#7c3aed" />
             <p>Déconnexion</p>
