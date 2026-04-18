@@ -21,9 +21,11 @@ export default function ConnectedLayout({ children }) {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-primary p-4 gap-4">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-hidden bg-base-100 rounded-2xl shadow-xl">
+        {children}
+      </main>
     </div>
   );
 }

@@ -54,7 +54,7 @@ export default function TweetComposer() {
   };
 
   return (
-    <div className="flex flex-row items-center gap-4 bg-base-200 p-5 shadow-sm rounded-2xl w-full">
+    <div className="flex flex-row items-center gap-4 bg-base-200 p-5 shadow-xl rounded-2xl w-full">
       <img
         src={userProfile?.AvatarUrl}
         alt="Avatar"

@@ -6,13 +6,13 @@ import TweetCard from "../components/TweetCard/TweetCard";
 
 export default function Feed() {
   // Variables
-  const { data: tweets, isLoading } = useTweets();
+  const { tweets, isLoading } = useTweets();
 
   // States
 
   if (isLoading) {
     return (
-      <div>
+      <div className="flex items-center justify-center h-screen">
         <Bars color="#7c3aed" />
       </div>
     );
@@ -20,9 +20,9 @@ export default function Feed() {
 
   return (
     <ConnectedLayout>
-      <div className="flex flex-col bg-base-300 p-3 h-screen">
-        <div className="flex flex-col items-center gap-4 p-5 h-1/8 w-full h-screen bg-base-100 shadow-sm rounded-2xl">
-          <h1 className="text-2xl font-bold text-base-content mb-5">
+      <div className="flex flex-col items-center bg-base-100 min-h-screen p-8">
+        <div className="flex flex-col gap-4 w-full max-w-2xl">
+          <h1 className="text-3xl text-center text-primary font-bold mb-5">
             Fil d'actualité
           </h1>
           <TweetComposer />

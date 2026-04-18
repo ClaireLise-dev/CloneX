@@ -8,10 +8,7 @@ export default function Main() {
 
   if (loading) {
     return (
-      <div
-        data-theme="lightX"
-        className="flex items-center justify-center h-screen"
-      >
+      <div className="flex items-center justify-center h-screen">
         <Bars color="#7c3aed" />
       </div>
     );

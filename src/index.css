@@ -10,27 +10,27 @@
     prefersdark: false;
     color-scheme: light;
 
-    --color-base-100: #f6f4ff;
-    --color-base-200: #ffffff;
-    --color-base-300: #ede9fe;
-    --color-base-content: #1f1b2e;
+    --color-base-100: #FFFFFF;
+    --color-base-200: #F3EEFF;
+    --color-base-300: #EDE8FF;
+    --color-base-content: #2D2B6B;
 
-    --color-primary: #7c3aed;
-    --color-primary-content: #ffffff;
+    --color-primary: #4D3FC7;
+    --color-primary-content: #FFFFFF;
 
-    --color-secondary: #a78bfa;
-    --color-secondary-content: #1f1b2e;
+    --color-secondary: #7C6FE0;
+    --color-secondary-content: #FFFFFF;
 
-    --color-accent: #c084fc;
-    --color-accent-content: #1f1b2e;
+    --color-accent: #C084FC;
+    --color-accent-content: #FFFFFF;
 
-    --color-neutral: #2a223d;
-    --color-neutral-content: #ffffff;
+    --color-neutral: #6B6B8D;
+    --color-neutral-content: #FFFFFF;
 
-    --color-info: #60a5fa;
-    --color-success: #34d399;
-    --color-warning: #fbbf24;
-    --color-error: #f87171;
+    --color-info: #60A5FA;
+    --color-success: #4CD97B;
+    --color-warning: #FBBF24;
+    --color-error: #F87171;
 
     --radius-box: 1rem;
     --radius-field: 9999px;
@@ -44,27 +44,27 @@
     prefersdark: true;
     color-scheme: dark;
 
-    --color-base-100: #1a1035;
-    --color-base-200: #241848;
-    --color-base-300: #2e1f5e;
-    --color-base-content: #f5f3ff;
+    --color-base-100: #1A1730;
+    --color-base-200: #211E3A;
+    --color-base-300: #2A2648;
+    --color-base-content: #E8E6FF;
 
-    --color-primary: #7c3aed;
-    --color-primary-content: #ffffff;
+    --color-primary: #4D3FC7;
+    --color-primary-content: #FFFFFF;
 
-    --color-secondary: #a78bfa;
-    --color-secondary-content: #140f22;
+    --color-secondary: #9B8FF5;
+    --color-secondary-content: #1A1730;
 
-    --color-accent: #c084fc;
-    --color-accent-content: #140f22;
+    --color-accent: #C084FC;
+    --color-accent-content: #1A1730;
 
-    --color-neutral: #140f22;
-    --color-neutral-content: #f5f3ff;
+    --color-neutral: #9999B3;
+    --color-neutral-content: #1A1730;
 
-    --color-info: #60a5fa;
-    --color-success: #34d399;
-    --color-warning: #fbbf24;
-    --color-error: #f87171;
+    --color-info: #60A5FA;
+    --color-success: #4CD97B;
+    --color-warning: #FBBF24;
+    --color-error: #F87171;
 
     --radius-box: 1rem;
     --radius-field: 9999px;
