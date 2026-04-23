@@ -90,7 +90,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-base-300">
+    <main className="min-h-screen bg-base-100">
       <div className="flex flex-col items-center justify-center gap-1 h-screen">
         <Logo className="h-30 w-30 mb-10" />
         <div className="card bg-base-100 shadow-2xl w-150">

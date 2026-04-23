@@ -4,12 +4,14 @@ import useReplies from "../../Hooks/useReplies";
 import ReplyComposer from "../ReplyComposer/ReplyComposer";
 import ReplyCard from "../ReplyCard/ReplyCard";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../../store/AuthProvider";
 import { MessageCircle, Trash2 } from "lucide-react";
 
 export default function TweetCard({ tweet }) {
   //States
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Variables
   const { deleteTweet } = useTweet();
@@ -33,7 +35,8 @@ export default function TweetCard({ tweet }) {
         <img
           src={userProfile?.AvatarUrl}
           alt="Avatar"
-          className="h-12 w-12 rounded-full shrink-0"
+          className="h-12 w-12 rounded-full shrink-0 cursor-pointer"
+          onClick={() => navigate(`/profile/${tweet.authorId}`)}
         />
         <div className="flex flex-col">
           <span className="font-medium text-base-content">

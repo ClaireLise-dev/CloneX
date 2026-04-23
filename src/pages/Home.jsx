@@ -39,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-base-300">
+    <main className="min-h-screen bg-base-100">
       <div className="flex flex-row items-center justify-center md:gap-4 lg:gap-10 p-2 h-screen">
         <div>
           <Logo className="h-40 w-40 mb-10" />

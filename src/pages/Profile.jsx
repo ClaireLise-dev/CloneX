@@ -2,19 +2,25 @@ import { AuthContext } from "../store/AuthProvider";
 import ConnectedLayout from "../layouts/ConnectedLayout";
 import TweetCard from "../components/TweetCard/TweetCard";
 import useTweets from "../Hooks/useTweets";
+import useUserProfile from "../Hooks/useUserProfile";
+import useFollows from "../Hooks/useFollows";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Profile() {
   // Contexte
-  const { user, userProfile, deleteCurrentUser } = useContext(AuthContext);
+  const { user, deleteCurrentUser } = useContext(AuthContext);
 
   // Variables
   const navigate = useNavigate();
   const { tweets } = useTweets();
-  const userTweets =
-    tweets?.filter((tweet) => tweet.authorId === user.uid) ?? [];
+
+  const { uid } = useParams();
+  const { userProfile: profileData } = useUserProfile(uid);
+  const userTweets = tweets?.filter((tweet) => tweet.authorId === uid) ?? [];
+  const { addFollow, deleteFollow } = useFollows(user.uid, uid);
+  const { followings } = useFollows(user.uid);
 
   // States
   const [loading, setLoading] = useState(false);
@@ -59,15 +65,29 @@ export default function Profile() {
             Profil
           </h1>
           <img
-            src={userProfile?.AvatarUrl}
+            src={profileData?.AvatarUrl}
             alt="Avatar"
             className="h-30 w-30 rounded-full shrink-0"
           />
           <span className="text-2xl text-base-content font-medium">
-            {userProfile?.Pseudo}
+            {profileData?.Pseudo}
           </span>
-          <span className="text-sm text-neutral">@{userProfile?.Pseudo}</span>
-
+          <span className="text-sm text-neutral">@{profileData?.Pseudo}</span>
+          {user.uid === uid ? null : followings ? (
+            <button
+              className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90 mb-4"
+              onClick={() => deleteFollow()}
+            >
+              Ne plus suivre
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90 mb-4"
+              onClick={() => addFollow(true)}
+            >
+              Suivre
+            </button>
+          )}
           {userTweets.length === 0 ? (
             <p>Tu n'as encore publié aucun tweet.</p>
           ) : (
@@ -75,12 +95,15 @@ export default function Profile() {
               <TweetCard key={tweet.id} tweet={tweet} />
             ))
           )}
-          <button
-            className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-auto mb-5"
-            onClick={() => handleDeleteAccount()}
-          >
-            Supprimer le compte
-          </button>
+
+          {user.uid === uid && (
+            <button
+              className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-auto mb-5"
+              onClick={() => handleDeleteAccount()}
+            >
+              Supprimer le compte
+            </button>
+          )}
         </div>
       </div>
     </ConnectedLayout>
