@@ -3,17 +3,13 @@ import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import { Send } from "lucide-react";
 
 export default function ReplyComposer({ tweetId }) {
   // Variables
   const queryClient = useQueryClient();
   const { user, userProfile } = useContext(AuthContext);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   // States
   const [loading, setLoading] = useState(false);
@@ -31,7 +27,7 @@ export default function ReplyComposer({ tweetId }) {
     };
 
     const response = await fetch(
-      "https://clonex-421e0-default-rtdb.europe-west1.firebasedatabase.app/replies.json",
+      `https://clonex-421e0-default-rtdb.europe-west1.firebasedatabase.app/replies/${tweetId}.json`,
       {
         method: "POST",
         headers: {
@@ -55,7 +51,7 @@ export default function ReplyComposer({ tweetId }) {
   };
 
   return (
-    <div className="flex flex-row items-center bg-base-100 gap-4 p-5 shadow-xl rounded-2xl w-full">
+    <div className="flex flex-row items-center bg-base-100 gap-4 p-5 rounded-2xl w-full mt-2">
       <img
         src={userProfile?.AvatarUrl}
         alt="Avatar"
@@ -67,20 +63,18 @@ export default function ReplyComposer({ tweetId }) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <textarea
-          placeholder="Quoi de neuf ?"
-          className="flex-1 bg-base-100 rounded-full px-4 py-2 border-0 focus:outline-none resize-none h-10"
+          placeholder="Commenter ce tweet..."
+          className="flex-1 bg-base-200 rounded-full px-4 py-2 border-0 focus:outline-none resize-none h-10"
           rows={1}
           {...register("texte", {
             maxLength: { value: 140 },
             required: "Le commentaire ne peut pas être vide",
           })}
         />
-        <button
-          className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90"
-          disabled={isSubmitting}
-        >
-          Publier
-        </button>
+        <Send
+          className="h-5 w-5 text-primary cursor-pointer"
+          onClick={handleSubmit(onSubmit)}
+        />
       </form>
     </div>
   );

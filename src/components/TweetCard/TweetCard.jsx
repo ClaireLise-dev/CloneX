@@ -1,12 +1,19 @@
 import useUserProfile from "../../Hooks/useUserProfile";
 import useTweet from "../../Hooks/useTweets";
-import { useContext } from "react";
+import useReplies from "../../Hooks/useReplies";
+import ReplyComposer from "../ReplyComposer/ReplyComposer";
+import ReplyCard from "../ReplyCard/ReplyCard";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../store/AuthProvider";
 import { MessageCircle, Trash2 } from "lucide-react";
 
 export default function TweetCard({ tweet }) {
+  //States
+  const [isOpen, setIsOpen] = useState(false);
+
   // Variables
   const { deleteTweet } = useTweet();
+  const { replies } = useReplies(tweet.id);
   const { userProfile } = useUserProfile(tweet.authorId);
   const { user } = useContext(AuthContext);
 
@@ -14,6 +21,10 @@ export default function TweetCard({ tweet }) {
   const handleDelete = () => {
     if (user.uid !== tweet.authorId) return;
     deleteTweet(tweet.id);
+  };
+
+  const toggleReplyComposer = () => {
+    setIsOpen((prev) => !prev);
   };
 
   return (
@@ -34,7 +45,13 @@ export default function TweetCard({ tweet }) {
       <div className="pl-15">
         <p className="text-base-content">{tweet.texte}</p>
         <div className="flex flex-row justify-between items-center mt-4">
-          <MessageCircle className="h-5 w-5 mt-2 text-neutral cursor-pointer" />
+          <div className="flex flex-row items-center justify-center gap-1">
+            <MessageCircle
+              className="h-5 w-5 mt-2 text-neutral cursor-pointer"
+              onClick={toggleReplyComposer}
+            />{" "}
+            <p className="mt-2 text-neutral">{replies?.length || 0}</p>
+          </div>
           {user.uid === tweet.authorId && (
             <Trash2
               className="h-5 w-5 mt-2 text-error cursor-pointer"
@@ -42,6 +59,14 @@ export default function TweetCard({ tweet }) {
             />
           )}
         </div>
+        {isOpen && (
+          <>
+            {replies?.map((reply) => (
+              <ReplyCard key={reply.id} reply={reply} />
+            ))}
+            <ReplyComposer tweetId={tweet.id} />
+          </>
+        )}
       </div>
     </div>
   );

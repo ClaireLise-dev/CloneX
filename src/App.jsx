@@ -13,10 +13,9 @@ const Signup = lazy(() => import("./pages/Signup"));
 const Feed = lazy(() => import("./pages/Feed"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Error = lazy(() => import("./pages/Error"));
-const TweetDetails = lazy(() => import("./pages/TweetDetails"));
 
 export default function App() {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -63,14 +62,6 @@ export default function App() {
                   element: (
                     <Suspense>
                       <Profile />
-                    </Suspense>
-                  ),
-                },
-                {
-                  path: "tweet/:id",
-                  element: (
-                    <Suspense>
-                      <TweetDetails />
                     </Suspense>
                   ),
                 },
