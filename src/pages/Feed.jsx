@@ -2,14 +2,20 @@ import TweetComposer from "../components/TweetComposer/TweetComposer";
 import ConnectedLayout from "../layouts/ConnectedLayout";
 import UsersSuggestions from "../components/UserSuggestions/UserSuggestions";
 import useTweets from "../Hooks/useTweets";
+import useFollows from "../Hooks/useFollows";
+import { useContext } from "react";
+import { AuthContext } from "../store/AuthProvider";
 import { Bars } from "react-loader-spinner";
 import TweetCard from "../components/TweetCard/TweetCard";
 
 export default function Feed() {
   // Variables
+  const { user } = useContext(AuthContext);
   const { tweets, isLoading } = useTweets();
-
-  // States
+  const { followings } = useFollows(user?.uid);
+  const filteredTweets = tweets?.filter((tweet) =>
+    followings?.some((following) => following.id === tweet.authorId),
+  );
 
   if (isLoading) {
     return (
@@ -27,7 +33,7 @@ export default function Feed() {
             Fil d'actualité
           </h1>
           <TweetComposer />
-          {tweets?.map((tweet) => (
+          {filteredTweets?.map((tweet) => (
             <TweetCard key={tweet.id} tweet={tweet} />
           ))}
         </div>

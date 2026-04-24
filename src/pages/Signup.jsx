@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../store/AuthProvider";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Home() {
   // Variables
@@ -15,6 +17,15 @@ export default function Home() {
   } = useForm();
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Contexte
+  const { user } = useContext(AuthContext);
+
+  // UseEffects
+  useEffect(() => {
+    if (user) navigate("/feed");
+  }, [user, navigate]);
 
   // States
 
@@ -69,10 +80,11 @@ export default function Home() {
             body: JSON.stringify(newUser),
           },
         );
-        // Erro
+        // Erreur
         if (!response.ok) {
           throw new Error("Une erreur est intervenue");
         }
+        queryClient.invalidateQueries(["users"]);
         navigate("/feed");
         toast.success("Inscription réussie !");
       })
