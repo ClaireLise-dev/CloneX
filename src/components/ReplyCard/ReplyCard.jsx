@@ -1,7 +1,6 @@
 import useUserProfile from "../../Hooks/useUserProfile";
 import ReplyComposer from "../ReplyComposer/ReplyComposer";
 import { AuthContext } from "../../store/AuthProvider";
-import { MessageCircle, Trash2 } from "lucide-react";
 
 export default function ReplyCard({ reply }) {
   // Variables

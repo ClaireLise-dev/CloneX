@@ -4,6 +4,7 @@ import TweetCard from "../components/TweetCard/TweetCard";
 import useTweets from "../Hooks/useTweets";
 import useUserProfile from "../Hooks/useUserProfile";
 import useFollows from "../Hooks/useFollows";
+import FollowingCard from "../components/FollowingCard.jsx/FollowingCard";
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,7 +20,11 @@ export default function Profile() {
   const { uid } = useParams();
   const { userProfile: profileData } = useUserProfile(uid);
   const userTweets = tweets?.filter((tweet) => tweet.authorId === uid) ?? [];
-  const { addFollow, deleteFollow } = useFollows(user.uid, uid);
+  const {
+    followings: isFollowing,
+    addFollow,
+    deleteFollow,
+  } = useFollows(user.uid, uid);
   const { followings } = useFollows(user.uid);
 
   // States
@@ -73,7 +78,37 @@ export default function Profile() {
             {profileData?.Pseudo}
           </span>
           <span className="text-sm text-neutral">@{profileData?.Pseudo}</span>
-          {user.uid === uid ? null : followings ? (
+          {user.uid === uid && followings?.length > 0 && (
+            <>
+              <button
+                className="btn btn-base-300 border-base-300 text-base-content  disabled:cursor-not-allowed disabled:opacity-90 mb-4"
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+              >
+                {followings?.length} abonnements
+              </button>
+              <dialog
+                id="my_modal_5"
+                className="modal modal-middle sm:modal-middle"
+              >
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg mb-3">Abonnements</h3>
+                  {followings?.map((following) => (
+                    <div className="flex flex-row">
+                      <FollowingCard key={following.id} uid={following.id} />
+                    </div>
+                  ))}
+                  <div className="modal-action">
+                    <form method="dialog">
+                      <button className="btn border-base-300">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </>
+          )}
+          {user.uid === uid ? null : isFollowing ? (
             <button
               className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90 mb-4"
               onClick={() => deleteFollow()}

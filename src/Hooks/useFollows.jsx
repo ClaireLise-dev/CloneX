@@ -82,6 +82,7 @@ export default function useFollows(uid, targetUid) {
     mutationFn: addFollow,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["followings", targetUid] });
+      queryClient.invalidateQueries({ queryKey: ["followings", undefined] });
     },
   });
 
@@ -89,6 +90,7 @@ export default function useFollows(uid, targetUid) {
     mutationFn: deleteFollow,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["followings", targetUid] });
+      queryClient.invalidateQueries({ queryKey: ["followings", undefined] });
     },
   });
 
