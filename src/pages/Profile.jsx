@@ -24,8 +24,8 @@ export default function Profile() {
     followings: isFollowing,
     addFollow,
     deleteFollow,
-  } = useFollows(user.uid, uid);
-  const { followings } = useFollows(user.uid);
+  } = useFollows(user?.uid, uid);
+  const { followings } = useFollows(user?.uid);
 
   // States
   const [loading, setLoading] = useState(false);

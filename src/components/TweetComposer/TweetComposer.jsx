@@ -54,7 +54,7 @@ export default function TweetComposer() {
   };
 
   return (
-    <div className="flex flex-row items-center gap-4 bg-base-200 p-5 shadow-xl rounded-2xl w-full">
+    <div className="flex flex-row items-start gap-4 bg-base-200 p-5 shadow-xl rounded-2xl w-full">
       <img
         src={userProfile?.AvatarUrl}
         alt="Avatar"
@@ -62,7 +62,7 @@ export default function TweetComposer() {
       />
 
       <form
-        className="flex flex-row items-center gap-4 flex-1"
+        className="flex flex-col lg:flex-row lg:items-center gap-4 flex-1"
         onSubmit={handleSubmit(onSubmit)}
       >
         <textarea

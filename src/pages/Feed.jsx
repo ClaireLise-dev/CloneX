@@ -13,8 +13,10 @@ export default function Feed() {
   const { user } = useContext(AuthContext);
   const { tweets, isLoading } = useTweets();
   const { followings } = useFollows(user?.uid);
-  const filteredTweets = tweets?.filter((tweet) =>
-    followings?.some((following) => following.id === tweet.authorId),
+  const filteredTweets = tweets?.filter(
+    (tweet) =>
+      tweet.authorId === user?.uid ||
+      followings?.some((following) => following.id === tweet.authorId),
   );
 
   if (isLoading) {
@@ -27,17 +29,20 @@ export default function Feed() {
 
   return (
     <ConnectedLayout>
-      <div className="flex flex-row scroll-auto gap-8 bg-base-100 justify-center min-h-screen p-8">
+      <div className="flex flex-row scroll-auto gap-4 lg:gap-8 pb-24 lg:pb-8 bg-base-100 justify-center min-h-screen p-2 lg:p-4 lg:p-8">
         <div className="flex flex-col gap-4 w-full max-w-2xl">
-          <h1 className="text-3xl text-center text-primary font-bold mb-5">
+          <h1 className="text-2xl lg:text-3xl text-center text-primary font-bold mt-5 lg:mt-0 mb-5">
             Fil d'actualité
           </h1>
+          <div className="lg:hidden">
+            <UsersSuggestions limit={1} mobile />
+          </div>
           <TweetComposer />
           {filteredTweets?.map((tweet) => (
             <TweetCard key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div>
+        <div className="hidden lg:block">
           <UsersSuggestions />
         </div>
       </div>

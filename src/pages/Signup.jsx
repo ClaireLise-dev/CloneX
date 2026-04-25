@@ -103,11 +103,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-base-100">
-      <div className="flex flex-col items-center justify-center gap-1 h-screen">
-        <Logo className="h-30 w-30 mb-10" />
-        <div className="card bg-base-100 shadow-2xl w-150">
-          <div className="card-body p-15">
-            <div className="card-title text-3xl text-primary font-bold mb-4">
+      <div className="flex flex-col items-center justify-center gap-1 px-4 lg:p-2 min-h-screen">
+        <Logo className="h-30 lg:h-40 w-30 lg:w-40 mb-10" />
+        <div className="card bg-base-100 shadow-2xl mt-6 lg:mt-0 w-full lg:w-150">
+          <div className="card-body p-6 lg:p-15">
+            <div className="card-title text-2xl lg:text-3xl text-primary font-bold mb-4">
               Inscription
             </div>
             <form

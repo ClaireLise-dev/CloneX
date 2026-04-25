@@ -6,26 +6,35 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserPlus } from "lucide-react";
 
-export default function UsersSuggestions() {
+export default function UsersSuggestions({ limit = 5, mobile = false }) {
   //Contextes
   const { user } = useContext(AuthContext);
 
   // Variables
   const { users } = useUsers();
   const navigate = useNavigate();
-  const { followings } = useFollows(user.uid);
+  const { followings } = useFollows(user?.uid);
   const userAlreadyFollowedIds =
     followings?.map((following) => following.id) ?? [];
   const filteredUsers = users?.filter(
-    (u) => u.id !== user.uid && !userAlreadyFollowedIds.includes(u.id),
+    (u) => u.id !== user?.uid && !userAlreadyFollowedIds.includes(u.id),
   );
 
   return (
     <>
       {filteredUsers?.length > 0 && (
-        <div className="flex flex-col bg-base-300 p-5 mt-18 shadow-xl rounded-2xl w-80">
+        <div
+          className={`flex flex-col bg-base-300 p-5 shadow-xl rounded-2xl ${
+            mobile ? "w-full mb-3" : "w-80 mt-18"
+          }`}
+        >
+          {mobile && (
+            <h3 className="font-bold text-base-content mb-3">
+              Suggestion pour toi
+            </h3>
+          )}
           <div className="flex flex-col  gap-5 mb-3">
-            {filteredUsers?.slice(0, 5).map((user) => (
+            {filteredUsers?.slice(0, limit).map((user) => (
               <div
                 key={user.id}
                 className="flex flex-row justify-between items-center"

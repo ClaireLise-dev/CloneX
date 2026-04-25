@@ -8,7 +8,7 @@ export default function Sidebar() {
   const { logOut, user, userProfile } = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col justify-between items-center w-80 p-3 h-full">
+    <div className="hidden lg:flex flex-col justify-between items-center w-80 p-3 h-full">
       <div className="flex flex-col w-full">
         <div className="p-5">
           <Logo className="h-20 w-20 mb-5 brightness-0 invert" />

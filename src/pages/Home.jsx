@@ -40,20 +40,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-base-100">
-      <div className="flex flex-row items-center justify-center md:gap-4 lg:gap-10 p-2 h-screen">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 px-4 lg:p-2 min-h-screen">
         <div>
-          <Logo className="h-40 w-40 mb-10" />
-          <h1 className="text-4xl font-bold text-base-content">
+          <Logo className="h-30 lg:h-40 w-30 lg:w-40 mb-5 lg:mb-10 mx-auto lg:mx-0" />
+          <h1 className="text-2xl lg:text-4xl text-center lg:text-left font-bold text-base-content">
             Rejoins la conversation
           </h1>
-          <h2 className="text-2xl font-light text-primary mt-4">
+          <h2 className="text-xl lg:text-2xl text-center lg:text-left font-light text-primary mt-4">
             Partage tes idées et connecte-toi au monde
           </h2>
         </div>
-        <div>
-          <div className="card bg-base-100 shadow-2xl w-150">
-            <div className="card-body p-15">
-              <div className="card-title text-3xl text-primary font-bold mb-4">
+        <div className="w-full lg:w-auto">
+          <div className="card bg-base-100 mt-6 lg:mt-0 shadow-2xl w-full lg:w-150 ">
+            <div className="card-body p-6 lg:p-15">
+              <div className="card-title text-2xl lg:text-3xl text-primary font-bold mb-4">
                 Connexion
               </div>
               <form
