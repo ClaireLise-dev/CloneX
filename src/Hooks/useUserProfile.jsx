@@ -3,13 +3,10 @@ import { useState, useEffect, useCallback } from "react";
 const useUserProfile = (uid) => {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasFetched, setHasFetched] = useState(false); // ← nouveau
 
-  // ✨ Cette fonction prend un uid en paramètre
   const fetchUserProfile = useCallback(async (uidToFetch) => {
-    console.log("🔵 fetchUserProfile - uidToFetch:", uidToFetch);
-
     if (!uidToFetch) {
-      console.log("🟡 pas de uid, on sort");
       setIsLoading(false);
       return;
     }
@@ -20,20 +17,25 @@ const useUserProfile = (uid) => {
         `https://clonex-421e0-default-rtdb.europe-west1.firebasedatabase.app/users/${uidToFetch}.json`,
       );
       const userData = await response.json();
-      console.log("🟢 userData reçu:", userData);
       setUserProfile(userData);
+      setHasFetched(true); // ← on marque qu'on a bien récupéré
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }, []); // ← plus de dépendance à uid
+  }, []);
 
   useEffect(() => {
-    fetchUserProfile(uid); // ← on passe l'uid actuel
+    fetchUserProfile(uid);
   }, [uid, fetchUserProfile]);
 
-  return { userProfile, isLoading, refreshUserProfile: fetchUserProfile };
+  return {
+    userProfile,
+    isLoading,
+    hasFetched, // ← exposé
+    refreshUserProfile: fetchUserProfile,
+  };
 };
 
 export default useUserProfile;

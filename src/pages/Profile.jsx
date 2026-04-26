@@ -19,8 +19,11 @@ export default function Profile() {
   const { tweets } = useTweets();
 
   const { uid } = useParams();
-  const { userProfile: profileData, loading: profileLoading } =
-    useUserProfile(uid);
+  const {
+    userProfile: profileData,
+    loading: profileLoading,
+    hasFetched,
+  } = useUserProfile(uid);
   const userTweets = tweets?.filter((tweet) => tweet.authorId === uid) ?? [];
   const {
     followings: isFollowing,
@@ -63,7 +66,7 @@ export default function Profile() {
       });
   };
 
-  if (profileLoading) {
+  if (profileLoading || !hasFetched) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Bars color="#7c3aed" />

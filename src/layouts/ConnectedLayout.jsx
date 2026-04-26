@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../store/AuthProvider";
 import { Navigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Sidebar from "../components/Sidebar/Sidebar";
 import BottomNav from "../components/BottomNavbar/BottomNavbar";
 
