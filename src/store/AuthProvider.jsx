@@ -16,7 +16,9 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { userProfile } = useUserProfile(user ? user.uid : null);
+  const { userProfile, refreshUserProfile } = useUserProfile(
+    user ? user.uid : null,
+  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -67,6 +69,7 @@ const AuthProvider = ({ children }) => {
     loginUser,
     deleteCurrentUser,
     userProfile,
+    refreshUserProfile,
   };
 
   return (

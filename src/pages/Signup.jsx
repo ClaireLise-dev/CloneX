@@ -20,7 +20,7 @@ export default function Home() {
   const queryClient = useQueryClient();
 
   // Contexte
-  const { user } = useContext(AuthContext);
+  const { user, refreshUserProfile } = useContext(AuthContext);
 
   // UseEffects
   useEffect(() => {
@@ -85,6 +85,7 @@ export default function Home() {
           throw new Error("Une erreur est intervenue");
         }
         queryClient.invalidateQueries(["users"]);
+        await refreshUserProfile();
         navigate("/feed");
         toast.success("Inscription réussie !");
       })
