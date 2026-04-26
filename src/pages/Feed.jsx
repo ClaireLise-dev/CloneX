@@ -34,7 +34,7 @@ export default function Feed() {
           <h1 className="text-2xl lg:text-3xl text-center text-primary font-bold mt-5 lg:mt-0 mb-5">
             Fil d'actualité
           </h1>
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             <UsersSuggestions limit={1} mobile />
           </div>
           <TweetComposer />
@@ -42,7 +42,7 @@ export default function Feed() {
             <TweetCard key={tweet.id} tweet={tweet} />
           ))}
         </div>
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <UsersSuggestions />
         </div>
       </div>

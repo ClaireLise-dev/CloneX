@@ -85,9 +85,7 @@ export default function Home() {
           throw new Error("Une erreur est intervenue");
         }
         queryClient.invalidateQueries(["users"]);
-        console.log("🟣 avant refresh");
         await refreshUserProfile(user.uid);
-        console.log("🟣 après refresh");
         navigate("/feed");
         toast.success("Inscription réussie !");
       })

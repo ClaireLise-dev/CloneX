@@ -40,7 +40,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-base-100">
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 px-4 lg:p-2 min-h-screen">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 px-4 lg:p-5 min-h-screen">
         <div>
           <Logo className="h-30 lg:h-40 w-30 lg:w-40 mb-5 lg:mb-10 mx-auto lg:mx-0" />
           <h1 className="text-2xl lg:text-4xl text-center lg:text-left font-bold text-base-content">
