@@ -52,10 +52,10 @@ Le projet suit une organisation par responsabilité, avec une séparation claire
 
 ## 📂 Structure de la base de données
 
-- `users/{uid}` – Profils des utilisateurs (Pseudo, Email, AvatarUrl)
-- `tweets/{tweetId}` – Publications (texte, authorId, createdAt)
-- `replies/{tweetId}/{replyId}` – Réponses aux tweets
-- `follows/{followerId}/{followingId}` – Relations d'abonnement
+* `users/{uid}` – Profils des utilisateurs (Pseudo, Email, AvatarUrl, following)
+* `users/{uid}/following/{followedUserId}` – Relations d'abonnement (booléen)
+* `tweets/{tweetId}` – Publications (texte, authorId, createdAt)
+* `replies/{tweetId}/{replyId}` – Réponses (texte, authorId, createdAt, tweetId)
 
 ## 🎨 Responsive design
 
