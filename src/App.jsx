@@ -65,6 +65,14 @@ export default function App() {
                     </Suspense>
                   ),
                 },
+                {
+                  path: "/404",
+                  element: (
+                    <Suspense>
+                      <Error />
+                    </Suspense>
+                  ),
+                },
               ],
             },
           ])}

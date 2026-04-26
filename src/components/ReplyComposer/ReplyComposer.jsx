@@ -51,7 +51,7 @@ export default function ReplyComposer({ tweetId }) {
   };
 
   return (
-    <div className="flex flex-row items-center bg-base-100 gap-4 p-5 rounded-2xl w-full mt-2">
+    <div className="flex flex-row items-center bg-base-100 gap-4 p-3 rounded-2xl w-full mt-2">
       <img
         src={userProfile?.AvatarUrl}
         alt="Avatar"

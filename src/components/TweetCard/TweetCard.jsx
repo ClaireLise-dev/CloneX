@@ -45,7 +45,7 @@ export default function TweetCard({ tweet }) {
           <span className="text-sm text-neutral">@{userProfile?.Pseudo}</span>
         </div>
       </div>
-      <div className="pl-15">
+      <div>
         <p className="text-base-content">{tweet.texte}</p>
         <div className="flex flex-row justify-between items-center mt-4">
           <div className="flex flex-row items-center justify-center gap-1">
@@ -62,15 +62,15 @@ export default function TweetCard({ tweet }) {
             />
           )}
         </div>
-        {isOpen && (
-          <>
-            {replies?.map((reply) => (
-              <ReplyCard key={reply.id} reply={reply} />
-            ))}
-            <ReplyComposer tweetId={tweet.id} />
-          </>
-        )}
       </div>
+      {isOpen && (
+        <div className="mt-4 pt-4 border-t border-base-300">
+          {replies?.map((reply) => (
+            <ReplyCard key={reply.id} reply={reply} />
+          ))}
+          <ReplyComposer tweetId={tweet.id} />
+        </div>
+      )}
     </div>
   );
 }

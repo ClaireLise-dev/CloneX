@@ -6,8 +6,9 @@ import useUserProfile from "../Hooks/useUserProfile";
 import useFollows from "../Hooks/useFollows";
 import FollowingCard from "../components/FollowingCard.jsx/FollowingCard";
 import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Bars } from "react-loader-spinner";
 
 export default function Profile() {
   // Contexte
@@ -18,7 +19,8 @@ export default function Profile() {
   const { tweets } = useTweets();
 
   const { uid } = useParams();
-  const { userProfile: profileData } = useUserProfile(uid);
+  const { userProfile: profileData, loading: profileLoading } =
+    useUserProfile(uid);
   const userTweets = tweets?.filter((tweet) => tweet.authorId === uid) ?? [];
   const {
     followings: isFollowing,
@@ -61,11 +63,21 @@ export default function Profile() {
       });
   };
 
+  if (profileLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Bars color="#7c3aed" />
+      </div>
+    );
+  }
+
+  if (!profileData) return <Navigate to="/404" replace />;
+
   return (
     <ConnectedLayout>
       {" "}
-      <div className="flex flex-col items-center bg-base-100 min-h-screen p-8">
-        <div className="flex flex-col items-center gap-2 w-full max-w-2xl min-h-[calc(100vh-4rem)]">
+      <div className="flex flex-col items-center bg-base-100 min-h-screen p-2 lg:p-8 pb-20 lg:pb-8">
+        <div className="flex flex-col items-center gap-2 w-full max-w-2xl">
           <h1 className="text-3xl text-center text-primary font-bold mb-5">
             Profil
           </h1>
@@ -78,7 +90,7 @@ export default function Profile() {
             {profileData?.Pseudo}
           </span>
           <span className="text-sm text-neutral">@{profileData?.Pseudo}</span>
-          {user.uid === uid && followings?.length > 0 && (
+          {user?.uid === uid && followings?.length > 0 && (
             <>
               <button
                 className="btn btn-base-300 border-base-300 text-base-content  disabled:cursor-not-allowed disabled:opacity-90 mb-4"
@@ -108,7 +120,7 @@ export default function Profile() {
               </dialog>
             </>
           )}
-          {user.uid === uid ? null : isFollowing ? (
+          {user?.uid === uid ? null : isFollowing ? (
             <button
               className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90 mb-4"
               onClick={() => deleteFollow()}
@@ -131,9 +143,9 @@ export default function Profile() {
             ))
           )}
 
-          {user.uid === uid && (
+          {user?.uid === uid && (
             <button
-              className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-auto mb-5"
+              className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-12 mb-8 lg:mb-5"
               onClick={() => handleDeleteAccount()}
             >
               Supprimer le compte
