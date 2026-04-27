@@ -34,26 +34,26 @@ export default function Profile() {
 
   // States
   const [loading, setLoading] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
 
   // Fonctions
   const handleDeleteAccount = async () => {
     if (loading) return;
 
-    const password = window.prompt(
-      "Entre ton mot de passe pour confirmer la suppression du compte :",
-    );
-
-    if (!password) return;
+    if (!deletePassword) {
+      toast.error("Mot de passe requis.");
+      return;
+    }
 
     setLoading(true);
 
-    await deleteCurrentUser(password)
+    await deleteCurrentUser(deletePassword)
       .then(() => {
         setLoading(false);
+        setDeletePassword("");
         toast.success("Suppression du compte réussie !");
         navigate("/?success=true");
       })
-
       .catch((error) => {
         if (error.code === "auth/wrong-password") {
           toast.error("Mot de passe incorrect.");
@@ -63,6 +63,7 @@ export default function Profile() {
           toast.error(error.message || "Impossible de supprimer le compte.");
         }
         setLoading(false);
+        setDeletePassword("");
       });
   };
 
@@ -147,12 +148,66 @@ export default function Profile() {
           )}
 
           {user?.uid === uid && (
-            <button
-              className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-12 mb-8 lg:mb-5"
-              onClick={() => handleDeleteAccount()}
-            >
-              Supprimer le compte
-            </button>
+            <>
+              <button
+                className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-12 mb-8 lg:mb-5"
+                onClick={() =>
+                  document.getElementById("delete_modal").showModal()
+                }
+              >
+                Supprimer le compte
+              </button>
+
+              <dialog id="delete_modal" className="modal modal-middle">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg text-error mb-3">
+                    Supprimer le compte
+                  </h3>
+                  <p className="mb-4 text-base-content">
+                    Cette action est <strong>irréversible</strong>. Tous tes
+                    tweets, réponses et abonnements seront définitivement
+                    supprimés. Entre ton mot de passe pour confirmer.
+                  </p>
+                  <input
+                    type="password"
+                    placeholder="Mot de passe"
+                    value={deletePassword}
+                    onChange={(e) => setDeletePassword(e.target.value)}
+                    className="input w-full border-2 border-base-300 focus:border-2 focus:border-primary focus:outline-none focus:ring-0 mb-4"
+                  />
+                  <div className="modal-action">
+                    <form method="dialog" className="flex gap-2">
+                      <button
+                        className="btn border-base-300 disabled:cursor-not-allowed disabled:opacity-90"
+                        onClick={() => setDeletePassword("")}
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-error border-error  disabled:cursor-not-allowed disabled:opacity-90"
+                        disabled={loading}
+                        onClick={() => {
+                          document.getElementById("delete_modal").close();
+                          handleDeleteAccount();
+                        }}
+                      >
+                        {loading ? (
+                          <Bars
+                            height="20"
+                            width="20"
+                            color="#ffffff"
+                            ariaLabel="loading"
+                          />
+                        ) : (
+                          "Supprimer définitivement"
+                        )}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </>
           )}
         </div>
       </div>
