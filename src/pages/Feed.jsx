@@ -29,7 +29,7 @@ export default function Feed() {
 
   return (
     <ConnectedLayout>
-      <div className="flex flex-row scroll-auto gap-4 lg:gap-8 pb-24 lg:pb-8 bg-base-100 justify-center min-h-screen p-2 lg:p-4 lg:p-8">
+      <div className="flex flex-row scroll-auto gap-4 lg:gap-8 pb-24 lg:pb-8 bg-base-100 justify-center p-2 lg:p-4 lg:p-8">
         <div className="flex flex-col gap-4 w-full max-w-2xl">
           <h1 className="text-2xl lg:text-3xl text-center text-primary font-bold mt-5 lg:mt-0 mb-5">
             Fil d'actualité

@@ -1,6 +1,6 @@
 import Logo from "../Logo/Logo";
 import { Home, LogOut, User, Sun, Moon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../store/AuthProvider";
 
@@ -11,24 +11,36 @@ export default function Sidebar() {
     <div className="hidden lg:flex flex-col justify-between items-center w-80 p-3 h-full">
       <div className="flex flex-col w-full">
         <div className="p-5">
-          <Logo className="h-20 w-20 mb-5 brightness-0 invert" />
+          <Link to="/feed">
+            <Logo className="h-20 w-20 mb-5 brightness-0 invert" />
+          </Link>
         </div>
         <div className="flex flex-col gap-6 w-full text-lg font-medium">
-          <Link
+          <NavLink
             to="/"
-            className="flex flex-row gap-5 items-center text-white/50 hover:text-white rounded-lg w-full p-3  transition-colors"
+            className={({ isActive }) =>
+              `flex flex-row gap-5 items-center 
+               rounded-lg w-full p-3 transition-colors ${
+                 isActive ? "text-white" : "text-white/50 hover:text-white"
+               }`
+            }
           >
             <Home className="h-6 w-6 stroke-current" />
             <p>Accueil</p>
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to={`/profile/${user?.uid}`}
-            className="flex flex-row gap-5 items-center text-white/50 hover:text-white rounded-lg w-full p-3 transition-colors"
+            className={({ isActive }) =>
+              `flex flex-row gap-5 items-center 
+               rounded-lg w-full p-3 transition-colors ${
+                 isActive ? "text-white" : "text-white/50 hover:text-white"
+               }`
+            }
           >
             <User className="h-6 w-6 stroke-current" />
             <p>Profil</p>
-          </Link>
+          </NavLink>
 
           <button
             onClick={() => logOut()}
@@ -41,14 +53,17 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-row justify-between w-full items-center rounded-2xl p-3 gap-4">
-        <div className="flex flex-row gap-1 items-center">
+        <Link
+          to={`/profile/${user?.uid}`}
+          className="flex flex-row gap-1 items-center"
+        >
           <img
             src={userProfile?.AvatarUrl}
             alt="Avatar"
             className="h-12 w-12 rounded-full shrink-0"
           />
           <span className=" text-white/50">@{userProfile?.Pseudo}</span>
-        </div>
+        </Link>
         <div className="flex items-center  text-white/50 gap-1">
           <Sun className="h-4 w-4" />
           <input

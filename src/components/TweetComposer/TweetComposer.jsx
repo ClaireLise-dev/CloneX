@@ -65,15 +65,20 @@ export default function TweetComposer() {
         className="flex flex-col lg:flex-row lg:items-center gap-4 flex-1"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <textarea
-          placeholder="Quoi de neuf ?"
-          className="flex-1 bg-base-100 rounded-full px-4 py-2 border-0 focus:outline-none resize-none h-10"
-          rows={1}
-          {...register("texte", {
-            maxLength: { value: 140 },
-            required: "Le tweet ne peut pas être vide",
-          })}
-        />
+        <div className="flex-1 flex flex-col">
+          <textarea
+            placeholder="Quoi de neuf ?"
+            className="flex-1 bg-base-100 rounded-full px-4 py-2 border-0 focus:outline-none resize-none h-10"
+            rows={1}
+            {...register("texte", {
+              maxLength: { value: 140 },
+              required: "Le tweet ne peut pas être vide",
+            })}
+          />
+          {errors.texte && (
+            <p className="text-error mt-2">{errors.texte.message}</p>
+          )}
+        </div>
         <button
           className="btn btn-primary border-primary disabled:cursor-not-allowed disabled:opacity-90"
           disabled={isSubmitting}

@@ -150,7 +150,7 @@ export default function Profile() {
           {user?.uid === uid && (
             <>
               <button
-                className="text-sm text-error/50 hover:text-error transition-colors cursor-pointer mt-12 mb-8 lg:mb-5"
+                className="btn btn-error border-error transition-colors cursor-pointer mt-12 mb-8 lg:mb-5"
                 onClick={() =>
                   document.getElementById("delete_modal").showModal()
                 }
